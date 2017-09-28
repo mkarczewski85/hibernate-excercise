@@ -2,7 +2,8 @@ package ogloszenia.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Set;
 
 @Entity
@@ -14,7 +15,7 @@ public class Zamowienie implements Serializable {
 
     private Long liczbaProduktow;
 
-    private LocalDate dataZamowienia;
+    private LocalDateTime dataZamowienia;
 
     private String email;
 
@@ -22,6 +23,13 @@ public class Zamowienie implements Serializable {
     private Set<PozycjaZamowienia> pozycjaZamowieniaSet;
 
     public Zamowienie() {}
+
+    public Zamowienie(String email, HashMap<Zabawka, Integer> pozycjaZamowienia) {
+        this.email = email;
+        this.dataZamowienia = LocalDateTime.now();
+        this.liczbaProduktow = new Long (pozycjaZamowienia.values().stream().mapToInt(x -> x).sum());
+    }
+
 
     public int getId() {
         return id;
@@ -39,11 +47,11 @@ public class Zamowienie implements Serializable {
         this.liczbaProduktow = liczbaProduktow;
     }
 
-    public LocalDate getDataZamowienia() {
+    public LocalDateTime getDataZamowienia() {
         return dataZamowienia;
     }
 
-    public void setDataZamowienia(LocalDate dataZamowienia) {
+    public void setDataZamowienia(LocalDateTime dataZamowienia) {
         this.dataZamowienia = dataZamowienia;
     }
 

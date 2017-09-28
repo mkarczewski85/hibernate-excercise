@@ -44,4 +44,24 @@ public class ZabawkaRepository {
         }
     }
 
+    public static Long countAllToys(){
+        Session session = null;
+
+        try{
+            session = HibernateUtil.openSession();
+            String hql = "SELECT COUNT(z) FROM Zabawka z";
+            Query query = session.createQuery(hql);
+            Long count = (Long)query.getSingleResult();
+            return count;
+        } catch (Exception e){
+            e.printStackTrace();
+            return new Long(-1);
+        } finally {
+            if (session.isOpen()){
+                session.close();
+            }
+        }
+
+    }
+
 }

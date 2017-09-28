@@ -3,6 +3,7 @@ package ogloszenia.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ public class Zabawka implements Serializable {
     }
 
     public Zabawka(String nazwa, Cena cena, Kolor kolor, int stanMagazynu, boolean czyPromocja, Material material,
-                   LocalDate dataProdukcji, byte[] image, byte[] document) {
+                   LocalDateTime dataProdukcji, byte[] image, byte[] document) {
         this.nazwa = nazwa;
         this.cena = cena;
         this.kolor = kolor;
@@ -50,7 +51,7 @@ public class Zabawka implements Serializable {
     @Enumerated(EnumType.STRING)
     private Material material;
 
-    private LocalDate dataProdukcji;
+    private LocalDateTime dataProdukcji;
 
     @Transient
     private Cena cenaProdukcji;
@@ -117,11 +118,11 @@ public class Zabawka implements Serializable {
         this.material = material;
     }
 
-    public LocalDate getDataProdukcji() {
+    public LocalDateTime getDataProdukcji() {
         return dataProdukcji;
     }
 
-    public void setDataProdukcji(LocalDate dataProdukcji) {
+    public void setDataProdukcji(LocalDateTime dataProdukcji) {
         this.dataProdukcji = dataProdukcji;
     }
 
