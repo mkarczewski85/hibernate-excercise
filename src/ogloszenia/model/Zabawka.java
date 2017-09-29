@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Set;
 
 @Entity
@@ -24,6 +25,11 @@ public class Zabawka implements Serializable {
         this.dataProdukcji = dataProdukcji;
         this.image = image;
         this.document = document;
+    }
+
+    public Zabawka(String nazwa, int stanMagazynu) {
+        this.nazwa = nazwa;
+        this.stanMagazynu = stanMagazynu;
     }
 
     @Id
@@ -156,5 +162,24 @@ public class Zabawka implements Serializable {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "Zabawka{" +
+                "id=" + id +
+                ", document=" + Arrays.toString(document) +
+                ", image=" + Arrays.toString(image) +
+                ", nazwa='" + nazwa + '\'' +
+                ", cena=" + cena +
+                ", kolor=" + kolor +
+                ", stanMagazynu=" + stanMagazynu +
+                ", czyPromocja=" + czyPromocja +
+                ", material=" + material +
+                ", dataProdukcji=" + dataProdukcji +
+                ", cenaProdukcji=" + cenaProdukcji +
+                ", pozycjaZamowieniaSet=" + pozycjaZamowieniaSet +
+                ", atest=" + atest +
+                '}';
     }
 }
