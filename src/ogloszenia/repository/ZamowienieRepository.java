@@ -5,10 +5,8 @@ import ogloszenia.model.Zabawka;
 import ogloszenia.model.Zamowienie;
 import ogloszeniar.hibernate.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.mapping.Collection;
 
 import javax.persistence.Query;
-import java.math.BigDecimal;
 import java.util.*;
 
 public class ZamowienieRepository {
@@ -39,6 +37,7 @@ public class ZamowienieRepository {
 
     public static List<Zamowienie> findAllOrdersbyToy(Zabawka z) {
         Session session = null;
+
         try {
             session = HibernateUtil.openSession();
             String hql = "SELECT z FROM Zamowienie z " +
@@ -57,7 +56,6 @@ public class ZamowienieRepository {
             }
         }
     }
-
 
 
 }

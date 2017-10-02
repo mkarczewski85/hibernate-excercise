@@ -130,7 +130,7 @@ public class ZabawkaRepository {
 
         try {
             session = HibernateUtil.openSession();
-            String hql ="SELECT new Zabawka(nazwa, stanMagazynu) FROM Zabawka z";
+            String hql = "SELECT new Zabawka(nazwa, stanMagazynu) FROM Zabawka z";
             Query query = session.createQuery(hql);
             return query.getResultList();
         } catch (Exception e) {
@@ -156,7 +156,7 @@ public class ZabawkaRepository {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            if (session != null && session.getTransaction().isActive()){
+            if (session != null && session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
             return false;
@@ -167,7 +167,7 @@ public class ZabawkaRepository {
         }
     }
 
-    public static List<Zabawka> findToyByNameLike(String name){
+    public static List<Zabawka> findToyByNameLike(String name) {
         Session session = null;
 
         try {
@@ -185,7 +185,6 @@ public class ZabawkaRepository {
             }
         }
     }
-
 
 
 }
