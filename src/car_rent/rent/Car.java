@@ -153,27 +153,28 @@ public class Car {
 
         Car car = (Car) o;
 
-        if (id != car.id) return false;
+        if (id == car.id) return true;
         if (capacity != car.capacity) return false;
-        if (!model.equals(car.model)) return false;
+        if (model != null ? !model.equals(car.model) : car.model != null) return false;
         if (make != car.make) return false;
+        if (engine != null ? !engine.equals(car.engine) : car.engine != null) return false;
         if (carSegment != car.carSegment) return false;
         if (color != car.color) return false;
-        if (!basePrice.equals(car.basePrice)) return false;
-        return insuranceCost.equals(car.insuranceCost);
+        if (basePrice != null ? !basePrice.equals(car.basePrice) : car.basePrice != null) return false;
+        return insuranceCost != null ? !insuranceCost.equals(car.insuranceCost) : car.insuranceCost != null;
 
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + model.hashCode();
-        result = 31 * result + make.hashCode();
+        result = 31 * result + (model != null ? model.hashCode() : 0);
+        result = 31 * result + (make != null ? make.hashCode() : 0);
         result = 31 * result + capacity;
-        result = 31 * result + carSegment.hashCode();
-        result = 31 * result + color.hashCode();
-        result = 31 * result + basePrice.hashCode();
-        result = 31 * result + insuranceCost.hashCode();
+        result = 31 * result + (carSegment != null ? carSegment.hashCode() : 0);
+        result = 31 * result + (color != null ? color.hashCode() : 0);
+        result = 31 * result + (basePrice != null ? basePrice.hashCode() : 0);
+        result = 31 * result + (insuranceCost != null ? insuranceCost.hashCode() : 0);
         return result;
     }
 }
