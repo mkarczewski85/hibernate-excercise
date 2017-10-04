@@ -11,7 +11,7 @@ public class Rent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn
     private Customer customer;
     private ZonedDateTime startDate;
@@ -26,6 +26,18 @@ public class Rent {
     private boolean discount;
 
     public Rent() {
+    }
+
+    public Rent(Customer customer, ZonedDateTime startDate, ZonedDateTime endDate, BigDecimal rentPrice,
+                BigDecimal insurancePrice, Car car, String description, boolean discount) {
+        this.customer = customer;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.rentPrice = rentPrice;
+        this.insurancePrice = insurancePrice;
+        this.car = car;
+        this.description = description;
+        this.discount = discount;
     }
 
     public int getId() {

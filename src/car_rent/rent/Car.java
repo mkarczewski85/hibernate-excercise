@@ -2,6 +2,8 @@ package car_rent.rent;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity
@@ -11,22 +13,22 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String model;
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Make make;
     private int capacity;
     @Embedded
     private Engine engine;
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private CarSegment carSegment;
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Color color;
     private BigDecimal basePrice;
     private BigDecimal insuranceCost;
 
-    @ManyToMany (mappedBy = "carSet")
+    @ManyToMany(mappedBy = "carSet")
     private Set<Option> optionSet;
 
-    @OneToMany (mappedBy = "car")
+    @OneToMany(mappedBy = "car")
     private Set<Rent> rentSet;
 
     public Car() {
@@ -130,5 +132,48 @@ public class Car {
 
     public void setRentSet(Set<Rent> rentSet) {
         this.rentSet = rentSet;
+    }
+
+    public boolean rentCar(Customer customer, ZonedDateTime startDate, ZonedDateTime endDate) {
+        long days = Duration.between(startDate, endDate).toDays();
+
+        BigDecimal finalPrice = this.getBasePrice().multiply(days < 1 ? BigDecimal.ONE : new BigDecimal(days));
+        BigDecimal finalInsurancePrice = this.getInsuranceCost().multiply(days < 1 ? BigDecimal.ONE : new BigDecimal(days));
+
+        Rent rent = new Rent(customer, startDate, endDate, finalPrice, finalInsurancePrice,
+                this, "new rent", false);
+
+        return RentRepository.save(rent);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Car car = (Car) o;
+
+        if (id != car.id) return false;
+        if (capacity != car.capacity) return false;
+        if (!model.equals(car.model)) return false;
+        if (make != car.make) return false;
+        if (carSegment != car.carSegment) return false;
+        if (color != car.color) return false;
+        if (!basePrice.equals(car.basePrice)) return false;
+        return insuranceCost.equals(car.insuranceCost);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + model.hashCode();
+        result = 31 * result + make.hashCode();
+        result = 31 * result + capacity;
+        result = 31 * result + carSegment.hashCode();
+        result = 31 * result + color.hashCode();
+        result = 31 * result + basePrice.hashCode();
+        result = 31 * result + insuranceCost.hashCode();
+        return result;
     }
 }
