@@ -2,6 +2,7 @@ package car_rent.rent;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -11,7 +12,7 @@ public class Rent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Customer customer;
     private ZonedDateTime startDate;
@@ -19,7 +20,7 @@ public class Rent {
     private BigDecimal rentPrice;
     private BigDecimal insurancePrice;
 
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Car car;
     private String description;
@@ -111,4 +112,27 @@ public class Rent {
     public void setDiscount(boolean discount) {
         this.discount = discount;
     }
+
+    public boolean cancel(Customer customer) {
+
+        if (canWeCancel(customer)) {
+            return RentRepository.remove(this);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean canWeCancel(Customer customer) {
+        return customerHasPrivilage(customer) &&
+                isRentInFuture();
+    }
+
+    public boolean customerHasPrivilage(Customer customer) {
+        return this.getCustomer().equals(customer);
+    }
+
+    public boolean isRentInFuture() {
+        return Duration.between(this.getStartDate(), ZonedDateTime.now().plusDays(1)).toDays() > 0;
+    }
+
 }

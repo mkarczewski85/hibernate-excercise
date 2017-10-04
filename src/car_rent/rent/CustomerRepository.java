@@ -4,21 +4,23 @@ import ogloszeniar.hibernate.util.HibernateUtil;
 import org.hibernate.Session;
 
 import javax.persistence.Query;
-import java.util.Collections;
-import java.util.List;
+import java.util.Optional;
 
-public class RentRepository {
+public class CustomerRepository {
 
-    public static boolean save(Rent rent) {
+
+    public static Optional<Customer> findByEmail(String email) {
+
         Session session = null;
-
         try {
             session = HibernateUtil.openSession();
-            session.save(rent);
-            return true;
+            String hql = "SELECT c FROM Customer c WHERE c.id = (SELECT u FROM User u WHERE u.email = :email)";
+            Query query = session.createQuery(hql);
+            query.setParameter("email", email);
+            return Optional.ofNullable((Customer) query.getSingleResult());
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return Optional.empty();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -26,14 +28,14 @@ public class RentRepository {
         }
     }
 
+    public static boolean update(Customer customer) {
 
-    public static boolean remove(Rent rent) {
         Session session = null;
 
         try {
             session = HibernateUtil.openSession();
-            session.getTransaction().begin();
-            session.remove(rent);
+            session.beginTransaction();
+            session.update(customer);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
@@ -44,25 +46,6 @@ public class RentRepository {
             return false;
         } finally {
             if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-
-    }
-
-    public static List<Rent> findAll(){
-        Session session = null;
-
-        try {
-            session = HibernateUtil.openSession();
-            String hql = "SELECT r FROM Rent r ORDER BY r.startDate DESC";
-            Query query = session.createQuery(hql);
-            return query.getResultList();
-        } catch (Exception e){
-            e.printStackTrace();
-            return Collections.emptyList();
-        } finally {
-            if (session != null && session.isOpen()){
                 session.close();
             }
         }
