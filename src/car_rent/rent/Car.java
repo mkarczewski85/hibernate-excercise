@@ -25,7 +25,7 @@ public class Car {
     private BigDecimal basePrice;
     private BigDecimal insuranceCost;
 
-    @ManyToMany(mappedBy = "carSet")
+    @ManyToMany(mappedBy = "carSet", fetch = FetchType.EAGER)
     private Set<Option> optionSet;
 
     @OneToMany(mappedBy = "car")
@@ -176,5 +176,18 @@ public class Car {
         result = 31 * result + (basePrice != null ? basePrice.hashCode() : 0);
         result = 31 * result + (insuranceCost != null ? insuranceCost.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "model='" + model + '\'' +
+                ", make=" + make +
+                ", capacity=" + capacity +
+                ", carSegment=" + carSegment +
+                ", color=" + color +
+                ", basePrice=" + basePrice +
+                ", insuranceCost=" + insuranceCost +
+                '}';
     }
 }

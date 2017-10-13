@@ -1,10 +1,15 @@
 package car_rent.rent;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table (name = "options")
+@Getter
+@Setter
 public class Option {
 
     @Id
@@ -18,6 +23,8 @@ public class Option {
             inverseJoinColumns=@JoinColumn(name = "car_id")
     )
     Set<Car> carSet;
+
+
 
 
 }
