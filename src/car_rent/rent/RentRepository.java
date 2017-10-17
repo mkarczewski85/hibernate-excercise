@@ -50,7 +50,7 @@ public class RentRepository {
 
     }
 
-    public static List<Rent> findAll(){
+    public static List<Rent> findAll() {
         Session session = null;
 
         try {
@@ -58,11 +58,30 @@ public class RentRepository {
             String hql = "SELECT r FROM Rent r ORDER BY r.startDate DESC";
             Query query = session.createQuery(hql);
             return query.getResultList();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();
         } finally {
-            if (session != null && session.isOpen()){
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    public static List<Rent> findByUserId(int id) {
+
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession();
+            String hql = "SELECT r FROM Rent r WHERE r.customer.id = :id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }

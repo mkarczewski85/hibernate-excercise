@@ -180,14 +180,12 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car{" +
-                "model='" + model + '\'' +
-                ", make=" + make +
-                ", capacity=" + capacity +
-                ", carSegment=" + carSegment +
-                ", color=" + color +
-                ", basePrice=" + basePrice +
-                ", insuranceCost=" + insuranceCost +
-                '}';
+        return  "Model: '" + model + '\'' +
+                ", Make: " + make +
+                ", Capacity: " + capacity +
+                ", Segment: " + carSegment +
+                ", Color: " + color +
+                ", Base price: " + basePrice +
+                ", Insurance cost: " + insuranceCost;
     }
 }

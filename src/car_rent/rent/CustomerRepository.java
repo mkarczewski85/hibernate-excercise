@@ -51,4 +51,20 @@ public class CustomerRepository {
         }
     }
 
+    public static Optional<Customer> findById(int userId){
+        Session session = null;
+
+        try {
+            session = HibernateUtil.openSession();
+            return Optional.ofNullable(session.find(Customer.class, userId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
 }

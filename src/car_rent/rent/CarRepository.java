@@ -126,4 +126,21 @@ public class CarRepository {
         }
     }
 
+    public static List<Car> findAll() {
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession();
+            String hql = "SELECT c FROM Car c";
+            Query query = session.createQuery(hql);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
 }
