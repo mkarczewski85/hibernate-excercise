@@ -5,10 +5,17 @@
     <servlet-name>ListOfCarServlet</servlet-name>
     <servlet-class>car_rent.rent.ListOfCarServlet</servlet-class>
   </servlet>
+
   <servlet>
     <servlet-name>CarSpecServlet</servlet-name>
     <servlet-class>car_rent.rent.CarSpecServlet</servlet-class>>
   </servlet>
+
+  <servlet>
+    <servlet-name>loginServlet</servlet-name>
+    <servlet-class>car_rent.account.loginServlet</servlet-class>>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>ListOfCarServlet</servlet-name>
     <url-pattern>/listOfCar</url-pattern>
@@ -18,4 +25,10 @@
     <servlet-name>CarSpecServlet</servlet-name>
     <url-pattern>/carSpec</url-pattern>
   </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>loginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+
 </web-app>
