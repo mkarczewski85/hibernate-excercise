@@ -9,6 +9,28 @@ import java.util.Optional;
 public class CustomerRepository {
 
 
+    public static boolean saveOrUpdate(Customer customer) {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.openSession();
+            session.getTransaction().begin();
+            session.save(customer);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
     public static Optional<Customer> findByEmail(String email) {
 
         Session session = null;
@@ -51,7 +73,7 @@ public class CustomerRepository {
         }
     }
 
-    public static Optional<Customer> findById(int userId){
+    public static Optional<Customer> findById(int userId) {
         Session session = null;
 
         try {

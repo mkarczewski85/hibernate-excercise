@@ -3,6 +3,7 @@ package car_rent.account;
 import ogloszeniar.hibernate.util.HibernateUtil;
 import org.hibernate.Session;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.Optional;
 
@@ -19,6 +20,9 @@ public class UserRepository {
             query.setParameter("email", email);
             query.setParameter("password", password);
             return Optional.ofNullable((User) query.getSingleResult());
+        } catch (NoResultException e) {
+            e.printStackTrace();
+            return Optional.empty();
         } catch (Exception e) {
             e.printStackTrace();
             return Optional.empty();
@@ -34,6 +38,7 @@ public class UserRepository {
         Session session = null;
 
         try {
+
             session = HibernateUtil.openSession();
             session.save(user);
             return true;

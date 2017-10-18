@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-public class loginServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -19,7 +19,13 @@ public class loginServlet extends HttpServlet {
 
         user.ifPresent(u -> req.getSession().setAttribute("userId", u.getId()));
 
+        if (user.isPresent()) {
+            resp.sendRedirect("index.jsp");
+        } else {
+            resp.sendRedirect("login.jsp?error=true");
+        }
 
     }
+
 
 }

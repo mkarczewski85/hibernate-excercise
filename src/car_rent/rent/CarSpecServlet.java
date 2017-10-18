@@ -6,16 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class CarSpecServlet extends HttpServlet {
-
-    private final static String zoneId = "Europe/Warsaw";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -54,16 +48,11 @@ public class CarSpecServlet extends HttpServlet {
 
         Customer nowak = new Customer("Jan", "Nowak", LocalDateTime.now(), LocalDateTime.now(), true, "0000112");
 
-        car.ifPresent(x -> x.rentCar(nowak, parsedateFromCalendar(startDate), parsedateFromCalendar(endDate)));
+        car.ifPresent(x -> x.rentCar(nowak, ProjectUtil.parsedateFromCalendar(startDate), ProjectUtil.parsedateFromCalendar(endDate)));
 
         PrintWriter writer = resp.getWriter();
         writer.write("<html><head></head><body>DODANO</body></html>");
 
     }
 
-    public ZonedDateTime parsedateFromCalendar(String date) {
-
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return LocalDate.parse(date, dateFormatter).atStartOfDay(ZoneId.of(zoneId));
-    }
 }
