@@ -15,7 +15,7 @@ public class CustomerRepository {
         try {
             session = HibernateUtil.openSession();
             session.getTransaction().begin();
-            session.save(customer);
+            session.saveOrUpdate(customer);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {

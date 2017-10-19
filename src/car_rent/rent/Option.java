@@ -25,6 +25,10 @@ public class Option {
     Set<Car> carSet;
 
 
+    public Option(String name) {
+        this.name = name;
+    }
 
-
+    public Option() {
+    }
 }

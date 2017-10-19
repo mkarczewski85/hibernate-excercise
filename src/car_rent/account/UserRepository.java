@@ -31,7 +31,29 @@ public class UserRepository {
                 session.close();
             }
         }
+    }
 
+    public static Optional<User> findUserByMail(String email) {
+
+        Session session = null;
+
+        try {
+            session = HibernateUtil.openSession();
+            String hql = "SELECT u FROM User u WHERE u.email = :email";
+            Query query = session.createQuery(hql);
+            query.setParameter("email", email);
+            return Optional.ofNullable((User) query.getSingleResult());
+        } catch (NoResultException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
     }
 
     public static boolean saveUser(User user) {

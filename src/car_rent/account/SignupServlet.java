@@ -37,6 +37,9 @@ public class SignupServlet extends HttpServlet {
         if (email == null || email.isEmpty()) {
             isValid = false;
             errors.put("email", "Nieprawidłowy adres e-mail!");
+        } else if (UserRepository.findUserByMail(email).isPresent()) {
+            isValid = false;
+            errors.put("email", "Użytkownik o tym adresie już istnieje!");
         }
 
         if (password == null || password.isEmpty() || password.length() < 6) {
@@ -79,6 +82,12 @@ public class SignupServlet extends HttpServlet {
         }
 
         if (!isValid) {
+            HashMap<String, String> variable = new HashMap<>();
+            variable.put("email", email);
+            variable.put("firstName", firstName);
+            variable.put("lastName", lastName);
+            variable.put("phoneNumber", phoneNumber);
+            req.setAttribute("variable", variable);
             req.setAttribute("error", errors);
             req.getRequestDispatcher("signup.jsp").forward(req, resp);
         } else {
