@@ -20,10 +20,15 @@ public class CarRepository {
         Session session = null;
         try {
             session = HibernateUtil.openSession();
-            session.save(car);
+            session.getTransaction().begin();
+            session.saveOrUpdate(car);
+            session.getTransaction().commit();
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            ex.printStackTrace();
             return false;
         } finally {
             if (session != null && session.isOpen()) {

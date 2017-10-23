@@ -17,11 +17,7 @@ public class Option {
     private int id;
     private String name;
 
-    @ManyToMany
-    @JoinTable(
-            joinColumns=@JoinColumn(name = "option_id", referencedColumnName = "id"),
-            inverseJoinColumns=@JoinColumn(name = "car_id")
-    )
+    @ManyToMany(mappedBy = "optionSet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Set<Car> carSet;
 
 

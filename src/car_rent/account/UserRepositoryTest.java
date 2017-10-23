@@ -22,7 +22,7 @@ public class UserRepositoryTest {
     @Test
     public void saveUser() throws Exception {
         User user = new User(EMAIL, PASSWORD);
-        Assert.assertTrue("save User", UserRepository.saveUser(user));
+        Assert.assertTrue("saveOrUpdate User", UserRepository.saveUser(user));
     }
 
 

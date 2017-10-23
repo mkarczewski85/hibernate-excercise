@@ -10,7 +10,7 @@ public class Engine {
 
     private BigDecimal engineCapacity;
     @Enumerated (EnumType.STRING)
-    private EngineType enginetype;
+    private EngineType engineType;
     private BigDecimal fuelConsumption;
     @Enumerated (EnumType.STRING)
     private GearBox gearBox;
@@ -23,7 +23,7 @@ public class Engine {
     public Engine(BigDecimal engineCapacity, EngineType enginetype, BigDecimal fuelConsumption, GearBox gearBox,
                   Integer horsePower, Integer torque) {
         this.engineCapacity = engineCapacity;
-        this.enginetype = enginetype;
+        this.engineType = enginetype;
         this.fuelConsumption = fuelConsumption;
         this.gearBox = gearBox;
         this.horsePower = horsePower;
@@ -38,12 +38,12 @@ public class Engine {
         this.engineCapacity = engineCapacity;
     }
 
-    public EngineType getEnginetype() {
-        return enginetype;
+    public EngineType getEngineType() {
+        return engineType;
     }
 
-    public void setEnginetype(EngineType enginetype) {
-        this.enginetype = enginetype;
+    public void setEngineType(EngineType enginetype) {
+        this.engineType = enginetype;
     }
 
     public BigDecimal getFuelConsumption() {

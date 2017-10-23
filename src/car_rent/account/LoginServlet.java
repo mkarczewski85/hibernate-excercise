@@ -1,6 +1,7 @@
 package car_rent.account;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,13 @@ public class LoginServlet extends HttpServlet {
 
         String email = req.getParameter("email");
         String password = req.getParameter("password");
+        String remember = req.getParameter("remember");
+
+        if (remember != null && !remember.trim().isEmpty()) {
+            Cookie cookie = new Cookie("remember", email);
+            cookie.setMaxAge(120);
+            resp.addCookie(cookie);
+        }
 
         Optional<User> user = UserRepository.findUserByMailAndPassword(email, password);
 

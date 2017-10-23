@@ -46,7 +46,7 @@
                             <li>Koszt ubezpieczenia: ${car.insuranceCost}</li>
                             <li>Silnik:
                                 <ul>
-                                    <li>Typ: ${car.engine.enginetype.name()}</li>
+                                    <li>Typ: ${car.engine.engineType.name()}</li>
                                     <li>Pojemność: ${car.engine.engineCapacity}</li>
                                     <li>Moc: ${car.engine.horsePower}</li>
                                     <li>Spalanie: ${car.engine.fuelConsumption}</li>

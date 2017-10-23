@@ -1,11 +1,17 @@
 <%@ page import="car_rent.rent.Customer" %>
 <%@ page import="car_rent.rent.CustomerRepository" %>
 <%@ page import="java.util.Optional" %>
+<%@ page import="car_rent.account.UserRepository" %>
+<%@ page import="car_rent.account.User" %>
 <%@ page language="java" contentType="text/html; harset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
     Integer userId = (Integer) request.getSession().getAttribute("userId");
+    if (userId == null) {
+
+    }
+
     if (userId != null) {
         Optional<Customer> customer = CustomerRepository.findById(userId);
         if (customer.isPresent()) {

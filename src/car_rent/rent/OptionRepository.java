@@ -27,14 +27,38 @@ public class OptionRepository {
         }
     }
 
-    public static boolean save(Option option) {
+    public static List<Option> findAllByIdList(List<Integer> idList) {
         Session session = null;
 
         try {
             session = HibernateUtil.openSession();
-            session.save(option);
+            String hql = "SELECT o FROM Option o WHERE o.id IN (:idList)";
+            Query query = session.createQuery(hql);
+            query.setParameter("idList", idList);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    public static boolean saveOrUpdate(Option option) {
+        Session session = null;
+
+        try {
+            session = HibernateUtil.openSession();
+            session.getTransaction().begin();
+            session.saveOrUpdate(option);
+            session.getTransaction().commit();
             return true;
         } catch (Exception e) {
+            if (session.isOpen() && session.getTransaction().isActive()){
+                session.getTransaction().rollback();
+            }
             e.printStackTrace();
             return false;
         } finally {

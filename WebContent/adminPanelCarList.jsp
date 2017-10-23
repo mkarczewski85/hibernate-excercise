@@ -29,7 +29,7 @@
         <div class="col-lg-9">
 
             <div class="row">
-                <a href="/editCar" class="btn btn-primary">Dodaj</a>
+                <a href="/adminPanelEditCar.jsp" class="btn btn-primary">Dodaj</a>
             </div>
 
             <c:forEach items="${carList}" var="car">
@@ -39,7 +39,8 @@
                         <p>${car.model}</p>
                     </div>
                     <div class="col-md-2">
-                        <a href="/editCar?carId=${car.id}" class="btn btn-primary">Edytuj</a>
+                        <a href="/adminPanelEditCar.jsp?carId=${car.id}"
+                           class="btn btn-primary">Edytuj</a>
                     </div>
 
                     <div class="col-md-2">

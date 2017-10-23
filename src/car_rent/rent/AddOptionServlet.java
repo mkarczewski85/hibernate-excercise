@@ -14,7 +14,7 @@ public class AddOptionServlet extends HttpServlet {
         String optionName = req.getParameter("optionName");
         if (optionName != null && !optionName.trim().isEmpty()){
             Option option = new Option(optionName);
-            OptionRepository.save(option);
+            OptionRepository.saveOrUpdate(option);
         }
         resp.sendRedirect("adminPanelOptionList.jsp");
 
